@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Crime Management</title>
+    <!-- base:css -->
+    <link rel="stylesheet" href="{{url_for('static',filename='vendors/mdi/css/materialdesignicons.min.css')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename='vendors/feather/feather.css')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename='vendors/base/vendor.bundle.base.css')}}">
+    <!-- endinject -->
+    <!-- plugin css for this page -->
+    <link rel="stylesheet" href="{{url_for('static',filename='vendors/flag-icon-css/css/flag-icon.min.css')}}" />
+    <link rel="stylesheet" href="{{url_for('static',filename='vendors/font-awesome/css/font-awesome.min.css')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename='vendors/jquery-bar-rating/fontawesome-stars-o.css')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename='vendors/jquery-bar-rating/fontawesome-stars.css')}}">
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <link rel="stylesheet" href="{{url_for('static',filename='css/style.css')}}">
+    <!-- endinject -->
+    <link rel="shortcut icon" href="{{url_for('static',filename='images/favicon.png')}}" />
+</head>
+<style>
+    #full-stars-example .rating-group {
+        display: inline-flex;
+    }
+    
+    #full-stars-example .rating__icon {
+        pointer-events: none;
+    }
+    
+    #full-stars-example .rating__input {
+        position: absolute !important;
+        left: -9999px !important;
+    }
+    
+    #full-stars-example .rating__label {
+        cursor: pointer;
+        padding: 0 0.1em;
+        font-size: 2rem;
+    }
+    
+    #full-stars-example .rating__icon--star {
+        color: orange;
+    }
+    
+    #full-stars-example .rating__icon--none {
+        color: #eee;
+    }
+    
+    #full-stars-example .rating__input--none:checked+.rating__label .rating__icon--none {
+        color: red;
+    }
+    
+    #full-stars-example .rating__input:checked~.rating__label .rating__icon--star {
+        color: #ddd;
+    }
+    
+    #full-stars-example .rating-group:hover .rating__label .rating__icon--star {
+        color: orange;
+    }
+    
+    #full-stars-example .rating__input:hover~.rating__label .rating__icon--star {
+        color: #ddd;
+    }
+    
+    #full-stars-example .rating-group:hover .rating__input--none:not(:hover)+.rating__label .rating__icon--none {
+        color: #eee;
+    }
+    
+    #full-stars-example .rating__input--none:hover+.rating__label .rating__icon--none {
+        color: red;
+    }
+    
+    #half-stars-example .rating-group {
+        display: inline-flex;
+    }
+    
+    #half-stars-example .rating__icon {
+        pointer-events: none;
+    }
+    
+    #half-stars-example .rating__input {
+        position: absolute !important;
+        left: -9999px !important;
+    }
+    
+    #half-stars-example .rating__label {
+        cursor: pointer;
+        /* if you change the left/right padding, update the margin-right property of .rating__label--half as well. */
+        padding: 0 0.1em;
+        font-size: 2rem;
+    }
+    
+    #half-stars-example .rating__label--half {
+        padding-right: 0;
+        margin-right: -0.6em;
+        z-index: 2;
+    }
+    
+    #half-stars-example .rating__icon--star {
+        color: orange;
+    }
+    
+    #half-stars-example .rating__icon--none {
+        color: #eee;
+    }
+    
+    #half-stars-example .rating__input--none:checked+.rating__label .rating__icon--none {
+        color: red;
+    }
+    
+    #half-stars-example .rating__input:checked~.rating__label .rating__icon--star {
+        color: #ddd;
+    }
+    
+    #half-stars-example .rating-group:hover .rating__label .rating__icon--star,
+    #half-stars-example .rating-group:hover .rating__label--half .rating__icon--star {
+        color: orange;
+    }
+    
+    #half-stars-example .rating__input:hover~.rating__label .rating__icon--star,
+    #half-stars-example .rating__input:hover~.rating__label--half .rating__icon--star {
+        color: #ddd;
+    }
+    
+    #half-stars-example .rating-group:hover .rating__input--none:not(:hover)+.rating__label .rating__icon--none {
+        color: #eee;
+    }
+    
+    #half-stars-example .rating__input--none:hover+.rating__label .rating__icon--none {
+        color: red;
+    }
+    
+    #full-stars-example-two .rating-group {
+        display: inline-flex;
+    }
+    
+    #full-stars-example-two .rating__icon {
+        pointer-events: none;
+    }
+    
+    #full-stars-example-two .rating__input {
+        position: absolute !important;
+        left: -9999px !important;
+    }
+    
+    #full-stars-example-two .rating__input--none {
+        display: none;
+    }
+    
+    #full-stars-example-two .rating__label {
+        cursor: pointer;
+        padding: 0 0.1em;
+        font-size: 2rem;
+    }
+    
+    #full-stars-example-two .rating__icon--star {
+        color: orange;
+    }
+    
+    #full-stars-example-two .rating__input:checked~.rating__label .rating__icon--star {
+        color: #ddd;
+    }
+    
+    #full-stars-example-two .rating-group:hover .rating__label .rating__icon--star {
+        color: orange;
+    }
+    
+    #full-stars-example-two .rating__input:hover~.rating__label .rating__icon--star {
+        color: #ddd;
+    }
+</style>
+
+<body>
+    <div class="container-scroller">
+        <!-- partial:partials/_navbar.html -->
+        <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+            <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center" style="background-color: rgb(50, 44, 92)!important;">
+                <a class="navbar-brand brand-logo"  style="color:beige" href="advocate_admin_home">CRIME</a>
+                <a class="navbar-brand brand-logo-mini" href="advocate_admin_home"><img src="{{url_for('static',filename='images/logo-mini.svg')}}" alt="logo" /></a>
+            </div>
+            <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
+            
+                <ul class="navbar-nav navbar-nav-right">
+                  
+                    <li class="nav-item dropdown mr-4 d-lg-flex d-none">
+                        <a class="nav-link count-indicatord-flex align-item s-center justify-content-center" href="/advocate_admin_home">
+                            <i class="icon-box menu-icon"></i>
+                            <span class="menu-title">Home</span>
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown mr-4 d-lg-flex d-none">
+                        <a  class="nav-link count-indicatord-flex align-item s-center justify-content-center" id="notificationDropdown" href="advocate_admin_home" data-toggle="dropdown">
+                            <i class="icon-head menu-icon"></i>
+                            <span class="menu-title">Advocate</span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="notificationDropdown">
+                            <!-- <p class="mb-0 font-weight-normal float-left dropdown-header">Settings</p> -->
+                           
+                            <a class="dropdown-item preview-item" href="/advocate_admin_view_advocate">
+                                <i class="icon-head menu-icon"></i>
+                                <span class="menu-title">View Advocate</span>
+                            </a>
+                            <a class="dropdown-item preview-item" href="/advocate_admin_ciew_accept_advocate">
+                                <i class="icon-book menu-icon"></i>
+                                <span class="menu-title">Accepted Advocate</span>
+                            </a>
+                            
+                        </li>
+                        <li class="nav-item dropdown mr-4 d-lg-flex d-none">
+                            <a  class="nav-link count-indicatord-flex align-item s-center justify-content-center" id="notificationDropdown" href="advocate_admin_home" data-toggle="dropdown">
+                                <i class="icon-file menu-icon"></i>
+                                <span class="menu-title">Complaints</span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="notificationDropdown">
+                                <!-- <p class="mb-0 font-weight-normal float-left dropdown-header">Settings</p> -->
+                                <a class="dropdown-item preview-item" href="/advocate_admin_view_advocate_complaint">
+                                    <i class="icon-file menu-icon"></i>
+                                    <span class="menu-title">Advocate Complaints</span>
+                                </a>
+                            
+                              
+                            </li>
+                         
+                               
+                            <li class="nav-item dropdown d-flex mr-4 ">
+                                <a class="nav-link count-indicator dropdown-toggle d-flex align-items-center justify-content-center" id="notificationDropdown" href="/logout">
+                                    <i class="fa fa-sign-out" aria-hidden="true"></i> Logout
+                                </a>
+                                
+                            </li>
+                        </div>
+                    </li>
+                    
+                </ul>
+                <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
+                    <span class="icon-menu"></span>
+                </button>
+            <!-- </div> -->
+        </nav>
+        <!-- partial -->
+        <div class="container-fluid page-body-wrapper">
+     
+            <div class="main-panel" style="margin: auto;">
+                <div class="content-wrapper">
+                    <div class="row">
+                        <div class="col-sm-12 mb-4 mb-xl-0">
+                            <h4 class="font-weight-bold text-dark">View Rating</h4>
+                            <!-- <p class="font-weight-normal mb-2 text-muted">APRIL 1, 2019</p> -->
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-xl-12 flex-column d-flex grid-margin stretch-card">
+                            <form>
+                                <div class="row flex-grow">
+
+                                    <div class="col-sm-3 grid-margin stretch-card">
+                                        {% for row in row%}
+                                        <div class="col-xl-12 flex-column d-flex grid-margin stretch-card">
+
+                                            <div class="card">
+
+                                                <div class="card-body">
+                                                    <h4 class="card-title mb-3">Advocate Details</h4>
+                                                    <div class="d-flex">
+                                                        <div>
+                                                            <h4 class="text-dark font-weight-bold mb-2 mr-2">{{row.name}}</h4>
+                                                            <p>{{row.phone}}</p>
+                                                            <p>{{row.address}}</p>
+                                                            <div class="d-flex">
+                                                                <div>
+                                                                    <h4 class="text-dark font-weight-bold mb-2 mr-2">{{row.rating}}</h4>
+                                                                </div>
+
+                                                                <div id="full-stars-example">
+                                                                    <div class="rating-group">
+
+                                                                        <label aria-label="5 stars" class="rating__label" for="rating-5"><i class="rating__icon rating__icon--star fa fa-star"></i></label>
+                                                                        <input class="rating__input" name="rating" id="rating-5" value="5" type="radio">
+                                                                    </div>
+
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                    <!-- <a href="/edit/{{row[1]}}" class="btn btn-primary">View Rating</a> -->
+                                                    <!-- <button type="button" class="btn btn-primary" onclick="get_id({{row[1]}})" data-toggle="modal" data-target="#exampleModal">
+                                                        Launch demo modal
+                                                      </button> -->
+                                                    <!-- <form action="/advocate_admin_view_rating" method="POST">
+                                                        <button class="btn btn-primary btn-sm" name="advid" value="{{row[1]}}">View Rating</button>
+                                                    </form> -->
+                                                    <p class="mb-4">Based reviews</p>
+
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                        {% endfor %}
+                                    </div>
+
+                            </form>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <script>
+                        function get_id(id) {
+                            console.log(id)
+                            sessionStorage.setItem('key', id);
+                        }
+
+
+                        function send_reply() {
+                            console.log('re')
+
+                            console.log(document.getElementById('reply').value)
+
+                            var dt = {
+                                adid: sessionStorage.getItem('key'),
+
+                            }
+                            console.log('adid', adid)
+
+
+                            fetch("http://localhost:5000/advocate_admin_view_advocate_rating", {
+                                method: "GET",
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify(dt)
+                            }).then(res => {
+                                console.log("Request complete! response:", res);
+                                window.location.reload();
+                            });
+
+
+                        }
+                    </script> -->
+
+                    <!-- Modal -->
+                    <!-- <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="d-flex">
+                                        <h4 class="text-dark font-weight-bold mb-2 mr-2">{{id}}</h4>
+                                        <div>
+                                            <select id="over-all-rating" name="rating" autocomplete="off">
+                                                <option value="1">1</option>
+                                             
+                                            <select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-primary">Save changes</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
+
+
+
+                </div>
+                <!-- content-wrapper ends -->
+                <!-- partial:partials/_footer.html -->
+               
+                <!-- partial -->
+            </div>
+            <!-- main-panel ends -->
+        </div>
+        <!-- page-body-wrapper ends -->
+    </div>
+    <!-- container-scroller -->
+
+    <!-- base:js -->
+    <script src="{{url_for('static',filename='vendors/base/vendor.bundle.base.js')}}"></script>
+    <!-- endinject -->
+    <!-- Plugin js for this page-->
+    <!-- End plugin js for this page-->
+    <!-- inject:js -->
+    <script src="{{url_for('static',filename='js/off-canvas.js')}}"></script>
+    <script src="{{url_for('static',filename='js/hoverable-collapse.js')}}"></script>
+    <script src="{{url_for('static',filename='js/template.js')}}"></script>
+    <!-- endinject -->
+    <!-- plugin js for this page -->
+    <script src="{{url_for('static',filename='vendors/chart.js/Chart.min.js')}}"></script>
+    <script src="{{url_for('static',filename='vendors/jquery-bar-rating/jquery.barrating.min.js')}}"></script>
+    <!-- End plugin js for this page -->
+    <!-- Custom js for this page-->
+    <script src="{{url_for('static',filename='js/dashboard.js')}}"></script>
+    <!-- End custom js for this page-->
+</body>
+
+</html>
