@@ -34,7 +34,7 @@ This is a Flask-based web application designed to manage a police station's oper
 
 4. Run the application:
    ```bash
-   python app.py
+   py run.py
    ```
 
 ## Endpoints
